@@ -1,17 +1,22 @@
 #include "main.h"
+#include "autoFunctions.hpp"
+#include "pros/motors.h"
+#include "pros/rtos.h"
 
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_front(20);
-    pros::Motor left_back(10);
-	pros::Motor right_front(11);
-	pros::Motor right_back(1);
+	pros::Motor right_front(20);
+    pros::Motor right_back(10);
+	pros::Motor left_front(-11);
+	pros::Motor left_back(-1);
 	pros::Motor shooter(6);
 	pros::Motor grabber(2);
 	pros::Motor arm(9);
+    pros::Imu imu(5);
+    pros::ADIDigitalOut wings(1);
 
 
 	
-/**
+/** 
  * A callback function for LLEMU's center button.
  *
  * When this callback is fired, it will toggle line 2 of the LCD text between
@@ -117,6 +122,12 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello PROS User!");
+	right_front.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	left_front.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	right_back.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	left_back.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
+	imu.reset();
+	wings.set_value(0);
 }
 
 /**
@@ -149,91 +160,41 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-/**
-drive_forward
-turn 90 degrees right
-drive_forward
-turn 90 degrees right
-drive_forward
-drive_backward
-turn 90 degrees left
-drive_forward
-raise_arm
-drive_backward
-turn 180 degrees right 
-drive_forward
-lower_arm
-drive_backward
-raise_arm 
-drive_forward
-SECOND     
-drive_backward
-turn 90 degrees left
-drive_forward
-turn 90 degrees left
-drive_forward
-raise_arm
-drive_backward
-turn 180 degrees right
-turn 90 degrees right
-drive_forward
-turn 90 degrees left
-drive_forward
-lower_arm
-drive_backward
-raise_arm
-drive_forward
-THIRD
-drive_backward
-lower_arm
-turn 90 degrees right
-drive_forward
-turn 90 degrees right
-drive_forward
-raise_arm
-drive_backward
-turn 180 degrees right
-drive_forward
-turn 90 degrees left
-drive_forward
-turn 90 degrees right
-drive_forward
-lower_arm
-drive_backwards
-raise_arm 
-drive_forward
-*/
-
-
-
+	arm = 30;
+	delay(1000);
+	arm = 0;
+	shooter = -140; 
 }
-
+// o
 /**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
+move_forward(2300);
+	delay(500);
+	turn(-87);
+	delay(500);
+	grabber = 40;
+	move_forward(800);
+	delay(500);
+	move_backward(800);
+	delay(250);
+	turn(160);
+	move_forward(1250);
+	grabber= 0;
+	*/
 void opcontrol() {
-	double leftX;
 	double leftY;
+	double rightX;
 	while (true) {
-		leftY = master.get_analog(ANALOG_LEFT_Y);
-		leftX = -master.get_analog(ANALOG_LEFT_X);
-		left_front = leftY + leftX;
-		left_back = leftY + leftX;
-		right_front = -leftY + leftX;   
-		right_back = -leftY + leftX;
+		leftY = -master.get_analog(ANALOG_LEFT_Y);
+		rightX = master.get_analog(ANALOG_RIGHT_X);      
+		
+		left_front = leftY + rightX;
+		left_back =  leftY + rightX;
+		right_front = leftY - rightX;   
+		right_back = leftY - rightX;
+	
 
 		if(master.get_digital(DIGITAL_X) == 1){
-			shooter = -130w;
+			shooter = -130;
 		}else if(master.get_digital(DIGITAL_Y) == 1){
 		
 			shooter = 0;
@@ -252,5 +213,12 @@ void opcontrol() {
 		}else{
 			grabber = 0;
 		}
+
+		if(master.get_digital(DIGITAL_A) == 1){
+			wings.set_value(1);
+		}else if(master.get_digital(DIGITAL_B) == 1){
+			wings.set_value(0);
+		}
 	}
 } 
+  

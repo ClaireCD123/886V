@@ -24,6 +24,7 @@
  * E_CONTROLLER_MASTER is pedantically correct within the PROS styleguide, but
  * not convenient for most student programmers.
  */
+#include "pros/imu.hpp"
 #define PROS_USE_SIMPLE_NAMES
 
 /**
@@ -35,6 +36,7 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "autoFunctions.hpp"
 
 /**
  * You should add more #includes here
@@ -78,4 +80,14 @@ void opcontrol(void);
 //#include <iostream>
 #endif
 
+	extern Controller master;
+	extern Motor right_front;
+    extern Motor right_back;
+	extern Motor left_front;
+	extern Motor left_back;
+	extern Motor shooter;
+	extern Motor grabber;
+    extern Motor arm;
+    extern Imu imu;
+    extern ADIDigitalOut wings;
 #endif  // _PROS_MAIN_H_
