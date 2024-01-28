@@ -6,5 +6,4 @@ void resetDriveSensors();
 void move_backward(double distance);
 void move_forward(double distance);
 void turn(double degrees);
-void autonomouss();
 #endif 

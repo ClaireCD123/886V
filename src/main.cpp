@@ -3,16 +3,19 @@
 #include "pros/motors.h"
 #include "pros/rtos.h"
 
-	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor right_front(20);
-    pros::Motor right_back(10);
-	pros::Motor left_front(-11);
-	pros::Motor left_back(-1);
-	pros::Motor shooter(6);
-	pros::Motor grabber(2);
-	pros::Motor arm(9);
-    pros::Imu imu(5);
-    pros::ADIDigitalOut wings(1);
+using c::delay;
+
+pros::Controller master(pros::E_CONTROLLER_MASTER);
+pros::Motor right_front(20);
+pros::Motor right_back(10);
+pros::Motor left_front(-11);
+pros::Motor left_back(-1);
+pros::Motor shooter(6);
+pros::Motor grabber(2);
+pros::Motor arm1(9);
+pros::Motor arm2(8);
+pros::Imu imu(5);
+pros::ADIDigitalOut wings(1);
 
 
 	
@@ -93,28 +96,9 @@ right_mtr	= 0;
 
 }
 
-// void raise_arm(){
-// arm_mtr.move_absolute(height,100);
+// void raise_arm11(){
+// arm11_mtr.move_absolute(height,100);
 // }
-
-
-
-
-
-
-
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
-//
-/**
- * Runs initialization code. This occurs as soon as the program is started.
  *
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
@@ -160,27 +144,41 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-	arm = 30;
-	delay(1000);
-	arm = 0;
-	shooter = -140; 
+wings.set_value(1);
+delay(500);
+move_backward(1700); 
+delay(500);
+wings.set_value(0);
 }
+
+
 // o
 /**
-move_forward(2300);
-	delay(500);
-	turn(-87);
-	delay(500);
-	grabber = 40;
-	move_forward(800);
-	delay(500);
-	move_backward(800);
-	delay(250);
-	turn(160);
-	move_forward(1250);
-	grabber= 0;
+grabber = 65;
+move_forward(2390);
+delay(500);
+turn(100);
+delay(500);
+move_forward(1000);
+grabber = 0;
+move_backward(600);
+delay(500);
+move_backward(300);
+delay(500);
+turn(170);
+grabber = 70;
+delay(500);
+move_forward(500);
+delay(100);
+move_backward(500);
+delay(500);
+turn(180);
+delay(500);
+move_forward(600);
+}
+	35cm is equal to 600 duration;
 	*/
-void opcontrol() {
+void opcontrol() {  
 	double leftY;
 	double rightX;
 	while (true) {
@@ -200,11 +198,14 @@ void opcontrol() {
 			shooter = 0;
 		}
 		if(master.get_digital(DIGITAL_R2) == 1){
-			arm = 100;
+			arm1 = 100;
+			arm2 =100;
 		}else if(master.get_digital(DIGITAL_R1) == 1){
-			arm = -100;
+			arm1 = -100;
+			arm2 = -100;
 		}else{
-			arm = 0;
+			arm1 = 0;
+			arm2 = 0;
 		}
 		if(master.get_digital(DIGITAL_L2) == 1){
 			grabber = 100;

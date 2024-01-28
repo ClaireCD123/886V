@@ -43,17 +43,3 @@ void turn(double degrees){
     }
     powerDrive(0, 0);
 }
-void autonomouss(){
-    move_forward(2300);
-	delay(500);
-	turn(-87);
-	delay(500);
-	grabber = 40;
-	move_forward(800);
-	delay(500);
-	move_backward(800);
-	delay(250);
-	turn(160);
-	move_forward(1250);
-	grabber= 0;
-}
