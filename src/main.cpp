@@ -2,9 +2,9 @@
 #include "autoFunctions.hpp"
 #include "pros/motors.h"
 #include "pros/rtos.h"
+using namespace pros;
 
-using c::delay;
-
+//BRO MESSI BRUH this messi kid
 pros::Controller master(pros::E_CONTROLLER_MASTER);
 pros::Motor right_front(20);
 pros::Motor right_back(10);
@@ -13,10 +13,10 @@ pros::Motor left_back(-1);
 pros::Motor shooter(6);
 pros::Motor grabber(2);
 pros::Motor arm1(9);
-pros::Motor arm2(8);
+pros::Motor arm2(-8);
 pros::Imu imu(5);
 pros::ADIDigitalOut wings(1);
-
+pros::ADIDigitalOut hang(2);
 
 //testing comment s
 /** 
@@ -105,7 +105,7 @@ right_mtr	= 0;
  */
 void initialize() {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
+	pros::lcd::set_text(1, "MESSI!");
 	right_front.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 	left_front.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
 	right_back.set_brake_mode(E_MOTOR_BRAKE_BRAKE);
@@ -144,40 +144,10 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-wings.set_value(1);
-delay(500);
-move_backward(1700); 
-delay(500);
-wings.set_value(0);
+	AutoSkills();
 }
 
 
-// o
-/**
-grabber = 65;
-move_forward(2390);
-delay(500);
-turn(100);
-delay(500);
-move_forward(1000);
-grabber = 0;
-move_backward(600);
-delay(500);
-move_backward(300);
-delay(500);
-turn(170);
-grabber = 70;
-delay(500);
-move_forward(500);
-delay(100);
-move_backward(500);
-delay(500);
-turn(180);
-delay(500);
-move_forward(600);
-}
-	35cm is equal to 600 duration;
-	*/
 void opcontrol() {  
 	double leftY;
 	double rightX;
@@ -220,6 +190,17 @@ void opcontrol() {
 		}else if(master.get_digital(DIGITAL_B) == 1){
 			wings.set_value(0);
 		}
+		if(master.get_digital(DIGITAL_A) == 1){
+			wings.set_value(1);
+		}else if(master.get_digital(DIGITAL_B) == 1){
+			wings.set_value(0);
+	    }
+
+		if(master.get_digital(DIGITAL_UP) == 1){
+			hang.set_value(1);
+		}else if(master.get_digital(DIGITAL_DOWN) == 1){
+			hang.set_value(0);
+		}
 	}
-} 
+}
   

@@ -36,7 +36,9 @@
 #define PROS_USE_LITERALS
 
 #include "api.h"
+#include "timer.hpp"
 #include "autoFunctions.hpp"
+
 
 /**
  * You should add more #includes here
