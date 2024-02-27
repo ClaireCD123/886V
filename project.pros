@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "AWPdefensive",
+    "project_name": "awpdefensive",
     "target": "v5",
     "templates": {
       "kernel": {
@@ -309,8 +309,8 @@
       }
     },
     "upload_options": {
-      "icon": "alien",
-      "description": "Match loading side",
+      "icon": "robot",
+      "description": "auto",
       "slot": 1
     }
   }

@@ -89,7 +89,9 @@ void opcontrol(void);
 	extern Motor left_back;
 	extern Motor shooter;
 	extern Motor grabber;
-    extern Motor arm;
+    extern Motor arm1;
+	extern Motor arm2;
     extern Imu imu;
     extern ADIDigitalOut wings;
+	extern ADIDigitalOut hang;
 #endif  // _PROS_MAIN_H_

@@ -143,10 +143,6 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {
-	AutoSkills();
-}
-
 
 void opcontrol() {  
 	double leftY;
@@ -162,7 +158,7 @@ void opcontrol() {
 	
 
 		if(master.get_digital(DIGITAL_X) == 1){
-			shooter = -130;
+			shooter = -100;
 		}else if(master.get_digital(DIGITAL_Y) == 1){
 		
 			shooter = 0;
@@ -204,3 +200,6 @@ void opcontrol() {
 	}
 }
   
+void autonomous() {
+	AutoSkills();
+}
